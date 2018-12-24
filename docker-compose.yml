@@ -1,0 +1,7 @@
+version: '3.2'
+
+services:
+  eureka:
+    image: steeltoeoss/eurekaserver
+    ports:
+      - 8761:8761
