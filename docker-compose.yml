@@ -5,3 +5,11 @@ services:
     image: steeltoeoss/eurekaserver
     ports:
       - 8761:8761
+  users:
+    build: ./users
+    depends_on:
+      - eureka
+    ports:
+      - 8080:80
+    environment:
+      "Logging:LogLevel:Default": "Debug"
