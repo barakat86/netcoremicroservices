@@ -5,12 +5,21 @@ services:
     image: steeltoeoss/eurekaserver
     ports:
       - 8761:8761
+  gateway:
+    build: ./gateway
+    depends_on:
+      - eureka
+    ports:
+      - 8080:80
+    command: ["./wait-for-it.sh","eureka:8761","--timeout=-1","--","dotnet", "gateway.dll"]
+    environment:
+      "Logging:LogLevel:Default": "Debug"
   users:
     build: ./users
     depends_on:
       - eureka
     ports:
-      - 8080:80
+      - 8081:80
     command: ["./wait-for-it.sh","eureka:8761","--timeout=-1","--","dotnet", "users.dll"]
     environment:
       "Logging:LogLevel:Default": "Debug"
