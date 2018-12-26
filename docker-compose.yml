@@ -11,5 +11,6 @@ services:
       - eureka
     ports:
       - 8080:80
+    command: ["./wait-for-it.sh","eureka:8761","--timeout=-1","--","dotnet", "users.dll"]
     environment:
       "Logging:LogLevel:Default": "Debug"
