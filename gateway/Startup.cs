@@ -30,7 +30,7 @@ namespace gateway
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Users Api", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "Gateway Api", Version = "v1" });
             });
 
             services.AddDiscoveryClient(Configuration);
@@ -56,7 +56,7 @@ namespace gateway
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Users API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Gateway API V1");
                 c.RoutePrefix = string.Empty;
             });
 
