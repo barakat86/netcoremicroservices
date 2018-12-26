@@ -10,8 +10,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Steeltoe.Common.Http.Discovery;
 using Pivotal.Discovery.Client;
 using Swashbuckle.AspNetCore.Swagger;
+using gateway.clients;
+using gateway.clients.Interfaces;
 
 namespace gateway
 {
@@ -34,6 +37,15 @@ namespace gateway
             });
 
             services.AddDiscoveryClient(Configuration);
+            services.AddTransient<DiscoveryHttpMessageHandler>();
+
+            services.AddHttpClient("users", c =>
+                {
+                    c.BaseAddress = new Uri("http://users-service/api/");
+                })
+                .AddHttpMessageHandler<DiscoveryHttpMessageHandler>()
+                .AddTypedClient<IUserService, UserService>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
