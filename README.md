@@ -1,4 +1,4 @@
-# netcoremicroservices
+# .NET Core microservices + service registry 
 Sample .NET Core microservices with docker support and eureka service discovery
 # How to run
 ```bash
