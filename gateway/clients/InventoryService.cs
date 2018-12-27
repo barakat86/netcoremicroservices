@@ -8,11 +8,11 @@ using Newtonsoft.Json;
 
 namespace gateway.clients
 {
-    public class UserService : IUserService
+    public class InventoryService : IInventoryService
     {
         private readonly HttpClient httpClient;
 
-        public UserService(HttpClient httpClient)
+        public InventoryService(HttpClient httpClient)
         {
             this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }

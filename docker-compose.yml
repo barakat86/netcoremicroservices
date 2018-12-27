@@ -23,3 +23,12 @@ services:
     command: ["./wait-for-it.sh","eureka:8761","--timeout=-1","--","dotnet", "users.dll"]
     environment:
       "Logging:LogLevel:Default": "Trace"
+  inventory:
+    build: ./inventory
+    depends_on:
+      - eureka
+    ports:
+      - 8082:80
+    command: ["./wait-for-it.sh","eureka:8761","--timeout=-1","--","dotnet", "inventory.dll"]
+    environment:
+      "Logging:LogLevel:Default": "Trace"

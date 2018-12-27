@@ -10,13 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Steeltoe.Common.Http.Discovery;
 using Pivotal.Discovery.Client;
 using Swashbuckle.AspNetCore.Swagger;
-using gateway.clients;
-using gateway.clients.Interfaces;
 
-namespace gateway
+namespace inventory
 {
     public class Startup
     {
@@ -33,26 +30,10 @@ namespace gateway
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Gateway Api", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "Inventory Api", Version = "v1" });
             });
 
             services.AddDiscoveryClient(Configuration);
-            services.AddTransient<DiscoveryHttpMessageHandler>();
-
-            services.AddHttpClient("users", c =>
-                {
-                    c.BaseAddress = new Uri("http://users-service/api/");
-                })
-                .AddHttpMessageHandler<DiscoveryHttpMessageHandler>()
-                .AddTypedClient<IUserService, UserService>();
-
-            services.AddHttpClient("inventory", c =>
-                {
-                    c.BaseAddress = new Uri("http://inventory-service/api/");
-                })
-                .AddHttpMessageHandler<DiscoveryHttpMessageHandler>()
-                .AddTypedClient<IInventoryService, InventoryService>();
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -75,7 +56,7 @@ namespace gateway
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Gateway API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Inventory API V1");
                 c.RoutePrefix = string.Empty;
             });
 
